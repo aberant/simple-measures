@@ -1,4 +1,6 @@
 module BeerUnits
+  class InvalidUnitError < StandardError ; end
+
   class Weight
     include Comparable
 
@@ -21,7 +23,7 @@ module BeerUnits
     end
 
     def initialize( value, unit )
-      raise "Invalid Unit" unless valid_unit?( unit )
+      raise InvalidUnitError, "Invalid Unit" unless valid_unit?( unit )
       @value = value
       @unit = unit
     end

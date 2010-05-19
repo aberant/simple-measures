@@ -15,7 +15,7 @@ describe BeerUnits::Weight do
     it "does not accept units it doesn't know about" do
       lambda {
         BeerUnits::Weight.new(42, :blarghs)
-      }.should raise_error
+      }.should raise_error( BeerUnits::InvalidUnitError )
     end
 
     it "should know equality" do
@@ -28,9 +28,7 @@ describe BeerUnits::Weight do
     it "should know aliases for the same unit" do
       BeerUnits::Weight.add_alias :grams, :gram
 
-      weight = BeerUnits::Weight.new(1, :gram)
-      weight.value.should == 1
-      weight.unit.should == :gram
+      BeerUnits::Weight.new( 2, :grams ).should == BeerUnits::Weight.new( 2, :gram )
     end
   end
   describe "conversion" do
