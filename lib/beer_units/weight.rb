@@ -31,24 +31,28 @@ module BeerUnits
       self.class.aliases.keys.include?( unit )
     end
 
+    def fetch_unit_conversion( name )
+      self.class.units[name]
+    end
+
     def <=>( other )
       other.value <=> value
     end
 
     def method_missing( meth, *args )
       # TODO: ruby < 1.9 does not have Symbol#match
-      super unless meth.match(/^to_/)
+      super unless meth.match( /^to_/ )
 
-      new_unit = meth.to_s.gsub('to_', '').to_sym
+      new_unit = meth.to_s.gsub( 'to_', '' ).to_sym
       old_unit = @unit
 
-      new_conversion = self.class.units[new_unit]
-      old_conversion = self.class.units[old_unit]
+      new_conversion = fetch_unit_conversion( new_unit )
+      old_conversion = fetch_unit_conversion( old_unit )
 
       old_base = @value * old_conversion.to_f
-      new_value = old_base / self.class.units[new_unit].to_f
+      new_value = old_base / fetch_unit_conversion( new_unit ).to_f
 
-      return Weight.new(new_value, new_unit)
+      return Weight.new( new_value, new_unit )
     end
   end
 end
