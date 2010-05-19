@@ -46,4 +46,11 @@ describe BeerUnits::Weight do
       weight.to_pounds.should == BeerUnits::Weight.new(2, :pounds)
     end
   end
+
+  describe "using coersion" do
+    it "is able to multiply" do
+      result = 2 * BeerUnits::Weight.new(2, :pounds)
+      result.should == BeerUnits::Weight.new(4, :pounds)
+    end
+  end
 end

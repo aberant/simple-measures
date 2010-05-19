@@ -39,6 +39,14 @@ module BeerUnits
       other.value <=> value
     end
 
+    def *( multiplier )
+      Weight.new( @value * multiplier, @unit )
+    end
+
+    def coerce( other )
+      return self, other
+    end
+
     def method_missing( meth, *args )
       # TODO: ruby < 1.9 does not have Symbol#match
       super unless meth.match( /^to_/ )
