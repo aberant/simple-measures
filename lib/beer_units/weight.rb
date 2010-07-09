@@ -1,6 +1,4 @@
 module BeerUnits
-  class InvalidUnitError < StandardError ; end
-
   class Weight
     include Comparable
 
@@ -24,15 +22,6 @@ module BeerUnits
       return self, other
     end
 
-    def method_missing( meth, *args )
-      # TODO: ruby < 1.9 does not have Symbol#match
-      super unless meth.match( /^to_/ )
-
-      new_unit = meth.to_s.gsub( 'to_', '' ).to_sym
-
-      convert_to( new_unit )
-    end
-
     def convert_to( new_unit )
       old_unit = @unit
 
@@ -43,7 +32,16 @@ module BeerUnits
       old_base = @value * old_conversion.to_f
       new_value = old_base / new_conversion.to_f
 
-      return Weight.new( new_value, new_unit )
+      Weight.new( new_value, new_unit )
+    end
+
+    def method_missing( meth, *args )
+      # TODO: ruby < 1.9 does not have Symbol#match
+      super unless meth.match( /^to_/ )
+
+      new_unit = meth.to_s.gsub( 'to_', '' ).to_sym
+
+      convert_to( new_unit )
     end
 
   private
