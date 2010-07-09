@@ -29,7 +29,7 @@ module BeerUnits
     end
 
     def <=>( other )
-      other.value <=> value
+      other.convert_to(:milligrams).value <=> convert_to(:milligrams).value
     end
 
     def *( multiplier )
@@ -55,8 +55,8 @@ module BeerUnits
       new_conversion = fetch_unit_conversion( new_unit )
       old_conversion = fetch_unit_conversion( old_unit )
 
+
       old_base = @value * old_conversion.to_f
-      # raise self.class.units.inspect
       new_value = old_base / new_conversion.to_f
 
       return Weight.new( new_value, new_unit )
@@ -69,21 +69,19 @@ module BeerUnits
     end
 
     def fetch_unit_conversion( name )
-      self.class.units[normalize_unit( name )]
+      units[normalize_unit( name )]
     end
 
     def normalize_unit( name )
       aliased_name = aliases[name]
       return aliased_name if aliased_name
 
-      root_name = units[name]
-      return root_name if root_name
+      return name if units.keys.include?( name )
 
       raise InvalidUnitError, "Invalid Unit"
     end
 
     def units() self.class.units; end
     def aliases() self.class.aliases; end
-
   end
 end

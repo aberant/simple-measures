@@ -6,6 +6,11 @@ describe BeerUnits::Weight do
       BeerUnits::Weight.add_unit :gram, 1000
       BeerUnits::Weight.add_alias :gram, :grams
 
+      BeerUnits::Weight.add_unit :milligram, 1
+      BeerUnits::Weight.add_alias :milligram, :milligrams
+
+      BeerUnits::Weight.add_unit :pound, 453_592.37
+      BeerUnits::Weight.add_alias :pound, :pounds
     end
 
     it "can be told to accept units and values" do
@@ -20,27 +25,26 @@ describe BeerUnits::Weight do
       }.should raise_error( BeerUnits::InvalidUnitError )
     end
 
-    it "should know equality" do
+    it "should know basic equality" do
       weight1 = BeerUnits::Weight.new(42, :grams)
       weight2 = BeerUnits::Weight.new(42, :grams)
 
       weight1.should == weight2
     end
 
-    it "should know aliases for the same unit" do
+    it "should know equality between convertable units" do
+      weight1 = BeerUnits::Weight.new(4, :grams)
+      weight2 = BeerUnits::Weight.new(4000, :milligrams)
 
+      weight1.should == weight2
+
+    end
+
+    it "should know aliases for the same unit" do
       BeerUnits::Weight.new( 2, :grams ).should == BeerUnits::Weight.new( 2, :gram )
     end
   end
   describe "conversion" do
-    before :each do
-      BeerUnits::Weight.add_unit :milligram, 1
-      BeerUnits::Weight.add_alias :milligram, :milligrams
-
-      BeerUnits::Weight.add_unit :pound, 453_592.37
-      BeerUnits::Weight.add_alias :pound, :pounds
-    end
-
     it "should convert from grams to pounds" do
       weight = BeerUnits::Weight.new(907.18474, :grams)
 
