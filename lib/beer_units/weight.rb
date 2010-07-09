@@ -28,15 +28,6 @@ module BeerUnits
       @unit = unit
     end
 
-    def valid_unit?( unit )
-      self.class.units.keys.include?( unit ) ||
-      self.class.aliases.keys.include?( unit )
-    end
-
-    def fetch_unit_conversion( name )
-      self.class.units[name]
-    end
-
     def <=>( other )
       other.value <=> value
     end
@@ -54,15 +45,45 @@ module BeerUnits
       super unless meth.match( /^to_/ )
 
       new_unit = meth.to_s.gsub( 'to_', '' ).to_sym
+
+      convert_to( new_unit )
+    end
+
+    def convert_to( new_unit )
       old_unit = @unit
 
       new_conversion = fetch_unit_conversion( new_unit )
       old_conversion = fetch_unit_conversion( old_unit )
 
       old_base = @value * old_conversion.to_f
-      new_value = old_base / fetch_unit_conversion( new_unit ).to_f
+      # raise self.class.units.inspect
+      new_value = old_base / new_conversion.to_f
 
       return Weight.new( new_value, new_unit )
     end
+
+  private
+    def valid_unit?( unit )
+      units.keys.include?( unit ) ||
+      aliases.keys.include?( unit )
+    end
+
+    def fetch_unit_conversion( name )
+      self.class.units[normalize_unit( name )]
+    end
+
+    def normalize_unit( name )
+      aliased_name = aliases[name]
+      return aliased_name if aliased_name
+
+      root_name = units[name]
+      return root_name if root_name
+
+      raise InvalidUnitError, "Invalid Unit"
+    end
+
+    def units() self.class.units; end
+    def aliases() self.class.aliases; end
+
   end
 end
