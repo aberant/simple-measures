@@ -2,14 +2,14 @@ require File.join( File.dirname(__FILE__) , '..', 'spec_helper' )
 
 describe BeerUnits::Weight do
   before :all do
-    BeerUnits::Weight.add_unit :gram, 1000
-    BeerUnits::Weight.add_alias :gram, :grams
+    BeerUnits::Registry.add_unit :gram, 1000
+    BeerUnits::Registry.add_alias :gram, :grams
 
-    BeerUnits::Weight.add_unit :milligram, 1
-    BeerUnits::Weight.add_alias :milligram, :milligrams
+    BeerUnits::Registry.add_unit :milligram, 1
+    BeerUnits::Registry.add_alias :milligram, :milligrams
 
-    BeerUnits::Weight.add_unit :pound, 453_592.37
-    BeerUnits::Weight.add_alias :pound, :pounds
+    BeerUnits::Registry.add_unit :pound, 453_592.37
+    BeerUnits::Registry.add_alias :pound, :pounds
   end
 
   describe "basics" do

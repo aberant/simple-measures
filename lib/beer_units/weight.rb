@@ -4,23 +4,7 @@ module BeerUnits
   class Weight
     include Comparable
 
-    @units = {}
-    @aliases = {}
-
     attr_reader :unit, :value
-
-    class << self
-      attr_reader :units
-      attr_reader :aliases
-
-      def add_unit( unit, value )
-        @units[unit] = value
-      end
-
-      def add_alias( unit, unit_alias )
-        @aliases[unit_alias] = unit
-      end
-    end
 
     def initialize( value, unit )
       raise InvalidUnitError, "Invalid Unit" unless valid_unit?( unit )
@@ -81,7 +65,7 @@ module BeerUnits
       raise InvalidUnitError, "Invalid Unit"
     end
 
-    def units() self.class.units; end
-    def aliases() self.class.aliases; end
+    def units() Registry.units; end
+    def aliases() Registry.aliases; end
   end
 end
