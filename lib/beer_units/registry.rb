@@ -14,6 +14,11 @@ module BeerUnits
       def add_alias( unit, unit_alias )
         @aliases[unit_alias] = unit
       end
+
+      def clear!
+        @units = {}
+        @alises = {}
+      end
     end
 
   end
