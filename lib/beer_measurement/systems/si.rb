@@ -1,4 +1,4 @@
-module BeerUnits
+module BeerMeasurement
   class Weight
     # everything is stored as milligrams
     add_unit :milligram, 1

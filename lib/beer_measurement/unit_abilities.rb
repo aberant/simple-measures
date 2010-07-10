@@ -1,4 +1,4 @@
-module BeerUnits
+module BeerMeasurement
   module UnitAbilities
     include Comparable
 
