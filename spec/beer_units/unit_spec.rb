@@ -1,21 +1,15 @@
 require File.join( File.dirname(__FILE__) , '..', 'spec_helper' )
 
-module BeerMeasurement
-  class Unit
-    include UnitAbilities
-  end
-end
-
 describe BeerMeasurement::Unit do
   before :each do
     BeerMeasurement::Registry.clear!
-    BeerMeasurement::Registry.add_unit :gram, 1000
+    BeerMeasurement::Registry.add_unit :gram, 1000, :weight
     BeerMeasurement::Registry.add_alias :gram, :grams
 
-    BeerMeasurement::Registry.add_unit :milligram, 1
+    BeerMeasurement::Registry.add_unit :milligram, 1, :weight
     BeerMeasurement::Registry.add_alias :milligram, :milligrams
 
-    BeerMeasurement::Registry.add_unit :pound, 453_592.37
+    BeerMeasurement::Registry.add_unit :pound, 453_592.37, :weight
     BeerMeasurement::Registry.add_alias :pound, :pounds
   end
 
