@@ -1,4 +1,4 @@
-module BeerMeasurement
+module Measurement
   class Unit
     include Comparable
 
@@ -40,7 +40,6 @@ module BeerMeasurement
       super unless meth.match( /^to_/ )
 
       new_unit = meth.to_s.gsub( 'to_', '' ).to_sym
-
       convert_to( new_unit )
     end
   end

@@ -1,2 +1,2 @@
 require 'spec'
-require 'beer_measurement'
+require 'measurement'

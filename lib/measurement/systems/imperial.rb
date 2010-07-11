@@ -1,4 +1,4 @@
-module BeerMeasurement
+module Measurement
   class Imperial
     def self.setup
 

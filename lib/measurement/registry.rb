@@ -1,4 +1,4 @@
-module BeerMeasurement
+module Measurement
   class Registry
     @units = {}
     @aliases = {}
