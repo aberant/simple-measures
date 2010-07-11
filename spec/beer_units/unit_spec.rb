@@ -11,6 +11,12 @@ describe Measurement::Unit do
 
     Measurement::Registry.add_unit :pound, 453_592.37, :weight
     Measurement::Registry.add_alias :pound, :pounds
+
+    Measurement::Registry.add_unit :milliliter, 1, :volume
+    Measurement::Registry.add_alias :milliliter, :milliliters
+
+    Measurement::Registry.add_unit :fluid_ounce, 28.413, :volume
+    Measurement::Registry.add_alias :fluid_ounce, :fl_oz
   end
 
   describe "basics" do
@@ -75,6 +81,24 @@ describe Measurement::Unit do
     it "is able to multiply" do
       result = 2 * Measurement::Unit.new(2,:pounds)
       result.should == Measurement::Unit.new(4, :pounds)
+    end
+  end
+
+  describe "addition" do
+    it "should be able to add two items of the exact same units" do
+      ( Measurement::Unit.new( 1, :gram ) +
+        Measurement::Unit.new( 1, :gram ) ).should == Measurement::Unit.new( 2, :grams )
+    end
+
+    it "should be able to add two items of the same units with one using an alias" do
+      ( Measurement::Unit.new( 1, :gram ) +
+        Measurement::Unit.new( 2, :grams ) ).should == Measurement::Unit.new( 3, :grams )
+    end
+
+    it "should not be able to add items of different types" do
+      lambda {
+        Measurement::Unit.new( 1, :gram ) + Measurement::Unit.new( 1, :milliliter)
+      }.should raise_error(ArgumentError)
     end
   end
 end

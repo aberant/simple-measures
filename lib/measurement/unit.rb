@@ -11,11 +11,20 @@ module Measurement
     end
 
     def <=>( other )
+      # TODO: this may accidentally work with different types and that's the problem
+      # each type needs to have a "root" to convert to for comparison
+      # on the fence if thise needs to be explicit or implied
       other.convert_to(:milligrams).value <=> convert_to(:milligrams).value
     end
 
     def *( multiplier )
       Unit.new( @value * multiplier, @unit )
+    end
+
+    def +( other )
+      raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit)
+
+      Unit.new( value + other.value, unit )
     end
 
     def coerce( other )

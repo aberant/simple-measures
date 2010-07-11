@@ -33,6 +33,10 @@ module Measurement
         raise InvalidUnitError
       end
 
+      def compatible_types?( type_a, type_b )
+        unit_type( type_a ) == unit_type( type_b )
+      end
+
       def clear!
         @units = {}
         @alises = {}
