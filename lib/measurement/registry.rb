@@ -26,11 +26,11 @@ module Measurement
 
       def normalized_unit_name( name )
         aliased_name = @aliases[name]
-        return aliased_name if aliased_name
 
+        return aliased_name if aliased_name
         return name if @units.keys.include?( name )
 
-        raise InvalidUnitError, "Invalid Unit"
+        raise InvalidUnitError
       end
 
       def clear!

@@ -57,6 +57,13 @@ describe Measurement::Unit do
       weight = Measurement::Unit.new(2, :grams)
       weight.to_milligrams.should == Measurement::Unit.new(2000, :milligrams)
     end
+
+    it "blows up if there is not a unit for a convience method" do
+      weight = Measurement::Unit.new(2, :grams)
+      lambda{
+        weight.to_blarghs
+      }.should raise_error( NoMethodError )
+    end
   end
 
   describe "using coersion" do

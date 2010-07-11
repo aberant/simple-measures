@@ -36,10 +36,11 @@ module Measurement
     end
 
     def method_missing( meth, *args )
-      # TODO: ruby < 1.9 does not have Symbol#match
       super unless meth.match( /^to_/ )
 
       new_unit = meth.to_s.gsub( 'to_', '' ).to_sym
+      super unless Registry.valid_unit?( new_unit )
+
       convert_to( new_unit )
     end
   end
