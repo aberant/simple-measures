@@ -53,7 +53,12 @@ describe Measurement::Unit do
       weight.convert_to(:milligrams).should == Measurement::Unit.new(2000, :milligrams)
     end
 
-    it "should have convience methods" do
+    it "should have convience methods for the unit" do
+      weight = Measurement::Unit.new(2, :grams)
+      weight.to_milligram.should == Measurement::Unit.new(2000, :milligrams)
+    end
+
+    it "should have convience methods for the alias" do
       weight = Measurement::Unit.new(2, :grams)
       weight.to_milligrams.should == Measurement::Unit.new(2000, :milligrams)
     end
