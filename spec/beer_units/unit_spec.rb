@@ -52,6 +52,11 @@ describe Measurement::Unit do
       weight = Measurement::Unit.new(2, :grams)
       weight.convert_to(:milligrams).should == Measurement::Unit.new(2000, :milligrams)
     end
+
+    it "should have convience methods" do
+      weight = Measurement::Unit.new(2, :grams)
+      weight.to_milligrams.should == Measurement::Unit.new(2000, :milligrams)
+    end
   end
 
   describe "using coersion" do
