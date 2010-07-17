@@ -75,6 +75,13 @@ describe Measurement::Unit do
         weight.to_blarghs
       }.should raise_error( NoMethodError )
     end
+
+    it "blows up if you try to convert between incompatible types" do
+      weight = Measurement::Unit.new( 2, :grams )
+      lambda{
+        weight.convert_to(:fl_oz)
+      }.should raise_error( Measurement::ConversionError )
+    end
   end
 
   describe "using coersion" do

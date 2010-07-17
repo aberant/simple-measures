@@ -20,6 +20,7 @@ module Measurement
 
   class InvalidUnitError < StandardError ; end
   class InvalidAliasError < StandardError ; end
+  class ConversionError < StandardError ; end
 
   def self.use_si_units!() require 'measurement/systems/si'; end
   def self.use_imperial_units!() require 'measurement/systems/imperial'; end

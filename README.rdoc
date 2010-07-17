@@ -10,9 +10,20 @@ all the units you need to describe and convert recipes.
   pounds, ounces
   grams
 
-== TODO
-  setup sugar for "3.pounds" methods on numeric
-  better handling in +/- methods when non Measurement::Unit classes are given as arguments
+== Examples
+
+  require 'measurement'
+
+  Measurement.use_imperial_units!
+  Measurement.use_si_units!
+  Measurement.use_numeric_sugar!
+
+  ( 3.pounds + 2.oz ).to_grams
+  => #<Measurement::Unit:0x00000101108e20 @value=1417.4761562, @unit=:grams>
+
+  1.liter.to_quarts
+  => #<Measurement::Unit:0x00000101115568 @value=1.05668820943259, @unit=:quarts>
+
 
 == Copyright
 

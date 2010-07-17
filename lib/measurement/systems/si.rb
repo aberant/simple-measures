@@ -19,7 +19,7 @@ Measurement::Registry.add_alias( :kilogram, :kg )
 # = Volume =
 # ==========
 Measurement::Registry.add_unit( :milliliter, 1, :volume )
-Measurement::Registry.add_unit( :liter, 1 ** 3, :volume )
+Measurement::Registry.add_unit( :liter, 10 ** 3, :volume )
 
 
 Measurement::Registry.add_alias( :milliliter, :milliliters )

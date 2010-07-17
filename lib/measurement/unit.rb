@@ -67,11 +67,12 @@ module Measurement
     end
 
     def convert_to( new_unit )
+      raise ConversionError, "Cannot convert #{unit} to #{new_unit}" unless Registry.compatible_types?( unit, new_unit )
+
       old_unit = @unit
 
       new_conversion = Registry.unit_conversion_value( new_unit )
       old_conversion = Registry.unit_conversion_value( old_unit )
-
 
       old_base = @value * old_conversion.to_f
       new_value = old_base / new_conversion.to_f
