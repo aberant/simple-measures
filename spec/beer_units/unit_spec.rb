@@ -22,7 +22,7 @@ describe Measurement::Unit do
   describe "basics" do
     it "does not accept units it doesn't know about" do
       lambda {
-        Measurement::Unit.new(42, :blarghs)
+        Measurement::Unit.new( 42, :blarghs )
       }.should raise_error( Measurement::InvalidUnitError )
     end
 
@@ -33,15 +33,15 @@ describe Measurement::Unit do
 
   describe "equality" do
     it "should know basic equality" do
-      weight1 = Measurement::Unit.new(42, :grams)
-      weight2 = Measurement::Unit.new(42, :grams)
+      weight1 = Measurement::Unit.new( 42, :grams )
+      weight2 = Measurement::Unit.new( 42, :grams )
 
       weight1.should == weight2
     end
 
     it "should know equality between convertable units" do
-      weight1 = Measurement::Unit.new(4, :grams)
-      weight2 = Measurement::Unit.new(4000, :milligrams)
+      weight1 = Measurement::Unit.new( 4, :grams )
+      weight2 = Measurement::Unit.new( 4000, :milligrams )
 
       weight1.should == weight2
     end
@@ -49,28 +49,28 @@ describe Measurement::Unit do
 
   describe "conversion" do
     it "should convert from grams to pounds" do
-      weight = Measurement::Unit.new(907.18474, :grams)
+      weight = Measurement::Unit.new( 907.18474, :grams )
 
-      weight.convert_to(:pounds).should == Measurement::Unit.new(2, :pounds)
+      weight.convert_to( :pounds ).should == Measurement::Unit.new( 2, :pounds )
     end
 
     it "should convert from grams to milligrams" do
-      weight = Measurement::Unit.new(2, :grams)
-      weight.convert_to(:milligrams).should == Measurement::Unit.new(2000, :milligrams)
+      weight = Measurement::Unit.new( 2, :grams )
+      weight.convert_to( :milligrams ).should == Measurement::Unit.new( 2000, :milligrams )
     end
 
     it "should have convience methods for the unit" do
-      weight = Measurement::Unit.new(2, :grams)
-      weight.to_milligram.should == Measurement::Unit.new(2000, :milligrams)
+      weight = Measurement::Unit.new( 2, :grams )
+      weight.to_milligram.should == Measurement::Unit.new( 2000, :milligrams )
     end
 
     it "should have convience methods for the alias" do
-      weight = Measurement::Unit.new(2, :grams)
-      weight.to_milligrams.should == Measurement::Unit.new(2000, :milligrams)
+      weight = Measurement::Unit.new( 2, :grams )
+      weight.to_milligrams.should == Measurement::Unit.new( 2000, :milligrams )
     end
 
     it "blows up if there is not a unit for a convience method" do
-      weight = Measurement::Unit.new(2, :grams)
+      weight = Measurement::Unit.new( 2, :grams )
       lambda{
         weight.to_blarghs
       }.should raise_error( NoMethodError )
