@@ -12,29 +12,54 @@ module Measurement
 
     def <=>( other )
       raise ArgumentError, "Cannot compare #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit)
+      # we have to make some compromises here
+      # sometimes floats appear equal, but a bagillionth decimal place later
+      # there is some mystery number that screws this up.  thus we chop it off after the thousandths place.
 
-      smallest_common_unit = Registry.smallest_unit_for_type( Registry.unit_type( unit) )
-      other.convert_to( smallest_common_unit ).value <=> convert_to( smallest_common_unit ).value
+      # please enquire about the "enterprise" license which will give you precision to the ten thousandths place
+      other_value = ( other.convert_to( smallest_common_unit ).value * 1000 ).round
+      self_value = ( convert_to( smallest_common_unit ).value * 1000 ).round
+
+      other_value <=> self_value
     end
 
     def *( multiplier )
-      Unit.new( @value * multiplier, @unit )
+      case multiplier
+      when Numeric
+        Unit.new( @value * multiplier, @unit )
+      else
+        raise ArgumentError, "Only able to acecpt Numeric types for multiplication"
+      end
     end
 
     def /( divisor )
-      Unit.new( @value / divisor, @unit )
+      case divisor
+      when Numeric
+        Unit.new( @value / divisor, @unit )
+      else
+        raise ArgumentError, "Only able to acecpt Numeric types for division"
+      end
     end
 
     def +( other )
-      raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit)
+      raise ArgumentError, "Only able to add Measurement::Unit objects" unless other.class == Measurement::Unit
+      raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit )
 
-      Unit.new( value + other.value, unit )
+      converted_self = convert_to( smallest_common_unit ).value
+      converted_other = other.convert_to( smallest_common_unit ).value
+
+      Unit.new( converted_self + converted_other, smallest_common_unit )
     end
 
     def -( other )
-      raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit)
+      raise ArgumentError, "Only able to subtract Measurement::Unit objects" unless other.class == Measurement::Unit
+      raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit )
 
-      Unit.new( value - other.value, unit )
+      converted_self = convert_to( smallest_common_unit ).value
+      converted_other = other.convert_to( smallest_common_unit ).value
+
+      Unit.new( converted_self - converted_other, smallest_common_unit )
+
     end
 
     def coerce( other )
@@ -61,6 +86,11 @@ module Measurement
       super unless Registry.valid_unit?( new_unit )
 
       convert_to( new_unit )
+    end
+
+  private
+    def smallest_common_unit
+      Registry.smallest_unit_for_type( Registry.unit_type( unit) )
     end
   end
 end

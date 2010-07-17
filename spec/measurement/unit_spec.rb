@@ -100,6 +100,11 @@ describe Measurement::Unit do
         Measurement::Unit.new( 2, :grams ) ).should == Measurement::Unit.new( 3, :grams )
     end
 
+    it "should be able to add two items of different but compatible units" do
+      ( Measurement::Unit.new( 1, :milligram ) +
+        Measurement::Unit.new( 1, :gram ) ).should == Measurement::Unit.new( 1.001, :grams )
+    end
+
     it "should not be able to add items of different types" do
       lambda {
         Measurement::Unit.new( 1, :gram ) + Measurement::Unit.new( 1, :milliliter)
@@ -116,6 +121,11 @@ describe Measurement::Unit do
     it "should be able to subtract two items of the same units with one using an alias" do
       ( Measurement::Unit.new( 6, :gram ) -
         Measurement::Unit.new( 3, :grams ) ).should == Measurement::Unit.new( 3, :grams )
+    end
+
+    it "should be able to subtract two items of different but compatible units" do
+      ( Measurement::Unit.new( 1, :gram ) -
+        Measurement::Unit.new( 1, :milligram ) ).should == Measurement::Unit.new( 999, :milligrams )
     end
 
     it "should not be able to subtract items of different types" do
