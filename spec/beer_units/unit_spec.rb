@@ -79,8 +79,13 @@ describe Measurement::Unit do
 
   describe "using coersion" do
     it "is able to multiply" do
-      result = 2 * Measurement::Unit.new(2,:pounds)
-      result.should == Measurement::Unit.new(4, :pounds)
+      result = 2 * Measurement::Unit.new( 2,:pounds )
+      result.should == Measurement::Unit.new( 4, :pounds )
+    end
+
+    it "is able to divide" do
+      result = Measurement::Unit.new( 8,:pounds ) / 2
+      result.should == Measurement::Unit.new( 4, :pounds )
     end
   end
 

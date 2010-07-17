@@ -21,6 +21,10 @@ module Measurement
       Unit.new( @value * multiplier, @unit )
     end
 
+    def /( divisor )
+      Unit.new( @value / divisor, @unit )
+    end
+
     def +( other )
       raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit)
 
