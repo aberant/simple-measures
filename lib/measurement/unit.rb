@@ -11,10 +11,10 @@ module Measurement
     end
 
     def <=>( other )
-      # TODO: this may accidentally work with different types and that's the problem
-      # each type needs to have a "root" to convert to for comparison
-      # on the fence if thise needs to be explicit or implied
-      other.convert_to(:milligrams).value <=> convert_to(:milligrams).value
+      raise ArgumentError, "Cannot compare #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit)
+
+      smallest_common_unit = Registry.smallest_unit_for_type( Registry.unit_type( unit) )
+      other.convert_to( smallest_common_unit ).value <=> convert_to( smallest_common_unit ).value
     end
 
     def *( multiplier )

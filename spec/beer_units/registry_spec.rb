@@ -56,4 +56,13 @@ describe Measurement::Registry do
 
     Measurement::Registry.unit_type( :grams ).should == :weight
   end
+
+  it "should be able to return the smallest unit for a type" do
+    Measurement::Registry.add_unit( :gram, 1000, :weight )
+    Measurement::Registry.add_unit( :milligram, 1, :weight )
+    Measurement::Registry.add_unit :pound, 453_592.37, :weight
+    Measurement::Registry.add_unit( :fluid_ounces, 1, :volume )
+
+    Measurement::Registry.smallest_unit_for_type( :weight ).should == :milligram
+  end
 end

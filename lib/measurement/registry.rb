@@ -8,7 +8,7 @@ module Measurement
       attr_reader :aliases
 
       def add_unit( unit, value, type )
-        @units[unit] = [value, type]
+        @units[unit] = UnitEntry.new( unit, value, type )
       end
 
       def add_alias( unit, unit_alias )
@@ -17,11 +17,11 @@ module Measurement
       end
 
       def unit_conversion_value( name )
-        unit( name )[0]
+        unit( name ).value
       end
 
       def unit_type( name )
-        unit( name )[1]
+        unit( name ).type
       end
 
       def normalized_unit_name( name )
@@ -44,6 +44,14 @@ module Measurement
 
       def valid_unit?( unit )
         @units.keys.include?( unit ) || @aliases.keys.include?( unit )
+      end
+
+      def smallest_unit_for_type( type )
+        units_filtered_by_type = units.find_all{ |unit| unit[1].type == type }
+        result = units_filtered_by_type.sort{ |a, b| a[1].value <=> b[1].value }
+
+        # only interested in key, not associated struct
+        result[0][0]
       end
 
     private

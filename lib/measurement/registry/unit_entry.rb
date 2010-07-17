@@ -1,0 +1,1 @@
+UnitEntry = Struct.new( :unit, :value, :type )
