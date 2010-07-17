@@ -1,18 +1,29 @@
-module Measurement
-  class Weight
-    # everything is stored as milligrams
-    add_unit :milligram, 1
-    add_unit :gram, 10 ** 3
-    add_unit :kilogram, 10 ** 6
+# ==========
+# = Weight =
+# ==========
+Measurement::Registry.add_unit( :milligram, 1, :weight )
+Measurement::Registry.add_unit( :gram, 10 ** 3, :weight )
+Measurement::Registry.add_unit( :kilogram, 10 ** 6, :weight )
 
 
-    add_alias :milligram, :mg
-    add_alias :milligram, :milligrams
+Measurement::Registry.add_alias( :milligram, :milligrams )
+Measurement::Registry.add_alias( :milligram, :mg )
 
-    add_alias :gram, :g
-    add_alias :gram, :grams
+Measurement::Registry.add_alias( :gram, :grams )
+Measurement::Registry.add_alias( :gram, :g )
 
-    add_alias :kilogram, :kg
-    add_alias :kilogram, :kilograms
-  end
-end
+Measurement::Registry.add_alias( :kilogram, :kilograms )
+Measurement::Registry.add_alias( :kilogram, :kg )
+
+# ==========
+# = Volume =
+# ==========
+Measurement::Registry.add_unit( :milliliter, 1, :volume )
+Measurement::Registry.add_unit( :liter, 1 ** 3, :volume )
+
+
+Measurement::Registry.add_alias( :milliliter, :milliliters )
+Measurement::Registry.add_alias( :milliliter, :ml )
+
+Measurement::Registry.add_alias( :liter, :liters )
+Measurement::Registry.add_alias( :liter, :l )
