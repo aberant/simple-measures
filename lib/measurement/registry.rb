@@ -1,3 +1,5 @@
+#= Measurement::Registry
+# the central location where all units and aliases are stored
 module Measurement
   class Registry
     @units = {}
