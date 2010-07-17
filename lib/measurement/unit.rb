@@ -27,6 +27,12 @@ module Measurement
       Unit.new( value + other.value, unit )
     end
 
+    def -( other )
+      raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit)
+
+      Unit.new( value - other.value, unit )
+    end
+
     def coerce( other )
       return self, other
     end

@@ -101,4 +101,22 @@ describe Measurement::Unit do
       }.should raise_error(ArgumentError)
     end
   end
+
+  describe "subtraction" do
+    it "should be able to subtract two items of the exact same units" do
+      ( Measurement::Unit.new( 5, :gram ) -
+        Measurement::Unit.new( 1, :gram ) ).should == Measurement::Unit.new( 4, :grams )
+    end
+
+    it "should be able to subtract two items of the same units with one using an alias" do
+      ( Measurement::Unit.new( 6, :gram ) -
+        Measurement::Unit.new( 3, :grams ) ).should == Measurement::Unit.new( 3, :grams )
+    end
+
+    it "should not be able to subtract items of different types" do
+      lambda {
+        Measurement::Unit.new( 1, :gram ) - Measurement::Unit.new( 1, :milliliter)
+      }.should raise_error(ArgumentError)
+    end
+  end
 end
