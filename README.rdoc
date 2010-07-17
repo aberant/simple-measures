@@ -1,0 +1,19 @@
+= Measurement
+
+all the units you need to describe and convert recipes.
+
+==== volume
+  gallons, quarts, pints, cups, floz
+  liters
+
+==== weight
+  pounds, ounces
+  grams
+
+== TODO
+  setup sugar for "3.pounds" methods on numeric
+  better handling in +/- methods when non Measurement::Unit classes are given as arguments
+
+== Copyright
+
+Copyright (c) 2009 Colin Harris. See LICENSE for details.
