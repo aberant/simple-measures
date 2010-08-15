@@ -1,4 +1,4 @@
-module Measurement
+module SimpleMeasures
   class Unit
     include Comparable
 
@@ -42,7 +42,7 @@ module Measurement
     end
 
     def +( other )
-      raise ArgumentError, "Only able to add Measurement::Unit objects" unless other.class == Measurement::Unit
+      raise ArgumentError, "Only able to add Measurement::Unit objects" unless other.class == Unit
       raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit )
 
       converted_self = convert_to( smallest_common_unit ).value
@@ -52,7 +52,7 @@ module Measurement
     end
 
     def -( other )
-      raise ArgumentError, "Only able to subtract Measurement::Unit objects" unless other.class == Measurement::Unit
+      raise ArgumentError, "Only able to subtract Measurement::Unit objects" unless other.class == Unit
       raise ArgumentError, "Cannot add #{unit} to #{other.unit}" unless Registry.compatible_types?( unit, other.unit )
 
       converted_self = convert_to( smallest_common_unit ).value
@@ -103,7 +103,6 @@ module Measurement
     def to_s
       "#{value} #{unit}"
     end
-
 
   private
     def smallest_common_unit

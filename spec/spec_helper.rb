@@ -1,2 +1,2 @@
 require 'spec'
-require 'measurement'
+require 'simple-measures'

@@ -1,6 +1,6 @@
-#= Measurement::Registry
+#= SimpleMeasures::Registry
 # the central location where all units and aliases are stored
-module Measurement
+module SimpleMeasures
   class Registry
     @units = {}
     @aliases = {}
