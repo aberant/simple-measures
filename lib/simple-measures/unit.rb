@@ -23,6 +23,7 @@ module SimpleMeasures
       other_value <=> self_value
     end
 
+    # need to double a recipe?  (5.cups * 2).to_s #=> "10 cups"
     def *( multiplier )
       case multiplier
       when Numeric
@@ -32,10 +33,11 @@ module SimpleMeasures
       end
     end
 
+    # need to cut a recipe in half?  (5.cups / 2).to_s #=> "2.5 cups"
     def /( divisor )
       case divisor
       when Numeric
-        Unit.new( @value / divisor, @unit )
+        Unit.new( @value / ( divisor * 1.0 ), @unit )
       else
         raise ArgumentError, "Only able to acecpt Numeric types for division"
       end

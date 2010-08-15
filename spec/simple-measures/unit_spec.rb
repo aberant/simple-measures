@@ -94,6 +94,11 @@ describe SimpleMeasures::Unit do
       result = SimpleMeasures::Unit.new( 8,:pounds ) / 2
       result.should == SimpleMeasures::Unit.new( 4, :pounds )
     end
+
+    it "is able to divide and produce fractions" do
+      result = SimpleMeasures::Unit.new( 9,:pounds ) / 2
+      result.should == SimpleMeasures::Unit.new( 4.5, :pounds )
+    end
   end
 
   describe "addition" do
