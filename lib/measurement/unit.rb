@@ -100,6 +100,10 @@ module Measurement
       value == other.value
     end
 
+    def to_s
+      "#{value} #{unit}"
+    end
+
 
   private
     def smallest_common_unit
