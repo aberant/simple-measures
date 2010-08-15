@@ -1,4 +1,4 @@
-= Measurement
+= Simple Measures
 
 all the units you need to describe and convert recipes.
 
@@ -12,19 +12,19 @@ all the units you need to describe and convert recipes.
 
 == Examples
 
-  require 'measurement'
+  require 'simple-measures'
 
-  Measurement.use_imperial_units!
-  Measurement.use_si_units!
-  Measurement.use_numeric_sugar!
+  SimpleMeasures.use_imperial_units!
+  SimpleMeasures.use_si_units!
+  SimpleMeasures.use_numeric_sugar!
 
   ( 3.pounds + 2.oz ).to_grams
-  => #<Measurement::Unit:0x00000101108e20 @value=1417.4761562, @unit=:grams>
+  => #<SimpleMeasures::Unit:0x00000101108e20 @value=1417.4761562, @unit=:grams>
 
   1.liter.to_quarts
-  => #<Measurement::Unit:0x00000101115568 @value=1.05668820943259, @unit=:quarts>
+  => #<SimpleMeasures::Unit:0x00000101115568 @value=1.05668820943259, @unit=:quarts>
 
 
 == Copyright
 
-Copyright (c) 2009 Colin Harris. See LICENSE for details.
+Copyright (c) 2010 Colin Harris. See LICENSE for details.
