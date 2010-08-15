@@ -10,6 +10,22 @@ all the units you need to describe and convert recipes.
   pounds, ounces
   grams
 
+== Motivation
+
+Why did I choose to re-invent a small wheel when there are already a few measurement libs out there?  I became dissatisfied with the libraries out there when I tried using them for a simple home brewing project.  Some of the libs specialized in the variety of measurements available, others specialized in sugary syntax.  I needed a library that would meet a few simple requirements.
+
+* well behaved ruby object - it defines methods like #<=>, #hash, #eql?, #coerce
+* using it's own class - not just converting to integers
+* ability to choose what features are loaded - doesn't load metric if I am only using imperial
+
+== Features
+
+* protects you from performing math on incompatible types
+* equality that knows 2.kilograms == 2000.grams
+* works well with Hash and Set classes
+* adds syntactic sugar to make your code easier to read
+* easy to use with Rails composed_of method
+
 == Examples
 
   require 'simple-measures'
@@ -24,6 +40,30 @@ all the units you need to describe and convert recipes.
   1.liter.to_quarts
   => #<SimpleMeasures::Unit:0x00000101115568 @value=1.05668820943259, @unit=:quarts>
 
+== Extending
+
+Do we not have what you need?  Starting a new project that needs to measure blargs?  SimpleMeasures is easy to extend.
+
+  # add_unit takes three things, the "unit name", the "unit value", and the type of measurement
+  # in this case, we are telling it that "blarg" is the base unit for alien weight
+  SimpleMeasures::Registry.add_unit( :blarg, 1, :alien_weight )
+
+  # now we tell SimpleMeasures that it's okay to use the name "blargs" to mean "blarg"
+  SimpleMeasures::Registry.add_alias( :blarg, :blargs )
+
+  # since we sometimes get heavy objects, we need kiloblargs
+  SimpleMeasures::Registry.add_unit( :kiloblarg, 10 ** 3, :alien_weight )
+
+  # it's also okay to call them "kiloblargs"
+  SimpleMeasures::Registry.add_alias( :kiloblarg, :kiloblargs )
+
+  # we also sometimes shorten them to "kbs"
+  SimpleMeasures::Registry.add_alias( :kiloblarg, :kbs )
+
+  # lets turn on some syntactic sugar!
+  SimpleMeasures.use_numeric_sugar!
+
+  3.kbs.to_blargs.to_s # => "3000.0 blargs"
 
 == Copyright
 
