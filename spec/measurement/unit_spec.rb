@@ -141,4 +141,14 @@ describe Measurement::Unit do
       }.should raise_error(ArgumentError)
     end
   end
+
+  describe "hashing" do
+    it "is correct so it can be used as a key" do
+      five_grams = Measurement::Unit.new( 5, :gram )
+      another_five_grams = Measurement::Unit.new( 5, :gram )
+
+      hash = {five_grams => 1 }.merge( another_five_grams => 2 )
+      hash.keys.size.should == 1
+    end
+  end
 end

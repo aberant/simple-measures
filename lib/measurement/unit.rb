@@ -89,6 +89,18 @@ module Measurement
       convert_to( new_unit )
     end
 
+    def hash
+      unit.hash ^
+      value.hash
+    end
+
+    def eql?( other )
+      self.class.equal?( other.class ) &&
+      unit == other.unit &&
+      value == other.value
+    end
+
+
   private
     def smallest_common_unit
       Registry.smallest_unit_for_type( Registry.unit_type( unit) )
